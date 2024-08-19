@@ -120,7 +120,7 @@ def main():
 
     selected_stocks_df = pd.DataFrame(selected_stocks)
     timestamp = datetime.today().strftime("%y%m%d")
-    selected_stocks_df.to_csv(f"selected_stocks_{timestamp}.csv", index=False)
+    selected_stocks_df.to_csv(f"train_track_selected_stocks_{timestamp}.csv", index=False)
 
     print("\nSelected Stocks:")
     print(tabulate(selected_stocks_df, headers="keys", tablefmt="grid", numalign="right"))
