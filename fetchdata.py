@@ -34,7 +34,7 @@ def fetch_data(bs_code, start_date, end_date):
     """使用baostock获取股票数据"""
     rs = bs.query_history_k_data_plus(
         bs_code,
-        "date,code,open,high,low,close,volume,amount",
+        "date,code,open,high,low,close,volume,amount,isST",
         start_date=start_date,
         end_date=end_date,
         frequency="d",
