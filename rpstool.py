@@ -59,7 +59,7 @@ def filter_criteria(df):
     year_high = df[(df.index >= YEAR_START_DATE) & (df.index <= twenty_days_ago)]["close"].max()
     recent_high_condition = df[df.index > twenty_days_ago]["close"].max() >= year_high
     # RPS120与RPS250之和大于185
-    rps_condition = (latest["rps120"] + latest["rps250"]) > 185
+    rps_condition = (latest["rps120"] + latest["rps250"]) > 190
     # 股价站上40日均线，且60日、120日、250日均线向上发散
     ma_condition = (latest["close"] > latest["ma40"]) and (latest["ma60"] > latest["ma120"]) and (latest["ma60"] > latest["ma250"])
     # 最近30天(20个交易日)最大跌幅小于30%
@@ -68,7 +68,7 @@ def filter_criteria(df):
     drawdown_condition = (max_price - current_price) / max_price <= 0.30
     # 最近一年涨幅不超过50%
     max_gain_this_year = calculate_max_gain_this_year(df)
-    max_gain_condition = max_gain_this_year is not None and max_gain_this_year <= 50
+    max_gain_condition = max_gain_this_year is not None and max_gain_this_year <= 80
 
     return all([recent_high_condition, rps_condition, ma_condition, drawdown_condition, max_gain_condition])
 

@@ -80,6 +80,10 @@ def filter_criteria(df):
     def check_price_above_ma20():
         return latest['close'] > latest['ma20']
 
+    def check_ytd_increase():
+        year_start_price = df[df.index >= YEAR_START_DATE]["close"].iloc[0]
+        return (latest["close"] - year_start_price) / year_start_price <= 1
+
     conditions = [
         check_rps(),
         check_drawdown(),
@@ -88,7 +92,8 @@ def filter_criteria(df):
         check_ma_crossover(4, 10, 20, 3),
         check_price_to_year_high(),
         check_ma_trend(),
-        check_price_above_ma20()
+        check_price_above_ma20(),
+        check_ytd_increase()
     ]
 
     return all(conditions)
