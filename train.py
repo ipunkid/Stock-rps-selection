@@ -81,7 +81,17 @@ def filter_criteria(df):
         return latest['close'] > latest['ma20']
 
     def check_ytd_increase():
-        year_start_price = df[df.index >= YEAR_START_DATE]["close"].iloc[0]
+        # Try to get data from current year
+        current_year_data = df[df.index >= YEAR_START_DATE]
+        if not current_year_data.empty:
+            year_start_price = current_year_data["close"].iloc[0]
+        else:
+            # If no data for current year, get last price from previous year
+            prev_year_data = df[df.index < YEAR_START_DATE]
+            if prev_year_data.empty:
+                return False  # Not enough data to make a decision
+            year_start_price = prev_year_data["close"].iloc[-1]
+        
         return (latest["close"] - year_start_price) / year_start_price <= 1
 
     conditions = [
